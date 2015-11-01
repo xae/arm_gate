@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/new/list">
+        <file>authenticated.png</file>
+        <file>connected.png</file>
+        <file>connecting.png</file>
+        <file>close.png</file>
+        <file>active.png</file>
+        <file>unactive.png</file>
+        <file>processing.gif</file>
+        <file>send.gif</file>
+        <file>receive.gif</file>
+        <file>send_receive.gif</file>
+        <file>disconnected.png</file>
+        <file>processing_error.gif</file>
+        <file>blinking.gif</file>
+        <file>message.png</file>
+        <file>warning.png</file>
+        <file>table.jpg</file>
+        <file>LAN.png</file>
+        <file>error.png</file>
+    </qresource>
+</RCC>
