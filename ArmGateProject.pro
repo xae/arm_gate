@@ -5,4 +5,5 @@ SUBDIRS += \
     AbstractAsyncClient \
     HardwareClientLib \
     HardwareServerLib \
+    ArmHttpServerQt \
     ArmGate
