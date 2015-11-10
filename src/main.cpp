@@ -6,9 +6,16 @@
 
 int main(int argc, char *argv[])
 {
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+#if QT_VERSION < 0x050000
+    QTextCodec *cyrillicCodec = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForTr(cyrillicCodec);
+#ifdef Q_OS_WIN
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("Win-1251"));
+#else
+    QTextCodec::setCodecForLocale(cyrillicCodec);
+#endif
+    QTextCodec::setCodecForCStrings(cyrillicCodec);
+#endif
 
     QApplication a(argc, argv);
     QApplication::setApplicationName("ARM Gate");

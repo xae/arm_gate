@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "ui_mainwindow.h"
 #include "arms_manager.h"

@@ -24,18 +24,18 @@ UI_DIR = "$$OUTPUT_DIR/ui/"
 DESTDIR = "$$OUTPUT_DIR/bin/"
 
 ##################################################
-VERSION = 0.02
+VERSION = 0.03
 DEFINES += MODULE_NAME=$$TARGET
 DEFINES += VERSION_NUMBER=v$$VERSION
+DEFINES += SRC_LIBRARY
 QMAKE_CXXFLAGS += -std=c++11
 
+########################################################
+#include($$PWD/../AbstractAsyncClient/abstractasyncclient_lib.pri)
+#include($$PWD/../HardwareServerLib/hardwareserver_lib.pri)
 
-##################################################
-### этап install
-#PROJECT.path = "$$APP_DIR/"
-#PROJECT.files += $$files($$DESTDIR/*.exe)
-#PROJECT.files += $$files($$BUILD_DIR/../lib/$$TYPE_BUILD/lib/*.dll)
-#INSTALLS += PROJECT
+include($$PWD/../AbstractAsyncClient/src/src.pri)
+include($$PWD/../HardwareServerLib/src/src.pri)
 
 ########################################################
 INCLUDEPATH += "$$PWD"

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QSystemTrayIcon>
+#include <QMenu>
 
 #include <memory>
 
