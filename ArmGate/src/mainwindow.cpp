@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     tray_.show();
     onHide();
 
+    assert(armsManager_);
+    armsManager_->init();
     tray_.showMessage(QApplication::applicationName(), tr("Программа запущена: порт 2015"));
 }
 //-----------------------------------------//

@@ -1,5 +1,5 @@
-#ifndef REMOTE_DEVICES_MANAGER_H
-#define REMOTE_DEVICES_MANAGER_H
+//-----------------------------------------//
+#pragma once
 
 #include <QObject>
 
@@ -15,4 +15,4 @@ signals:
 public slots:
 };
 
-#endif // REMOTE_DEVICES_MANAGER_H
+//-----------------------------------------//
