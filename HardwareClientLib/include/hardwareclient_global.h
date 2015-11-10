@@ -1,0 +1,12 @@
+#ifndef SRC_GLOBAL_H
+#define SRC_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(HARDWARE_CLIENT_LIBRARY)
+#  define HARDWARE_CLIENTSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define HARDWARE_CLIENTSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // SRC_GLOBAL_H

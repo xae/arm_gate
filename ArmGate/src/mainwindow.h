@@ -30,10 +30,6 @@ private slots:
     void onHide();
     void onExit();
 
-    void onClientConnected(QString ip);
-    void onClientDisconnected(QString ip);
-
-
 private:
     const std::unique_ptr<Ui::MainWindow> ui_;
     const std::unique_ptr<ArmsManager> armsManager_;

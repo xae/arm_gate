@@ -47,17 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
     tray_.show();
     onHide();
 
-    // arms
-    connect(armsManager_.get(),
-            SIGNAL(clientConnected(QString)),
-            this,
-            SLOT(onClientConnected(const QString&)));
-    connect(armsManager_.get(),
-            SIGNAL(clientDisconnected(QString)),
-            this,
-            SLOT(onClientDisconnected(const QString&)));
-    armsManager_->init();
-
     tray_.showMessage(QApplication::applicationName(), tr("Программа запущена: порт 2015"));
 }
 //-----------------------------------------//
@@ -112,26 +101,5 @@ void MainWindow::onExit()
     {
         QApplication::quit();
     }
-}
-//-----------------------------------------//
-void MainWindow::onClientConnected(QString ip)
-{
-    assert(!ip.isEmpty());
-
-    menu_.addAction(QIcon(":/new/list/authenticated.png"), ip);
-    tray_.showMessage(QApplication::applicationName(), ip + " connected");
-}
-//-----------------------------------------//
-void MainWindow::onClientDisconnected(QString ip)
-{
-    assert(!ip.isEmpty());
-
-    for(auto* action : menu_.actions())
-        if(action->text() == ip)
-        {
-            menu_.removeAction(action);
-            break;
-        }
-    tray_.showMessage(QApplication::applicationName(), ip + " disconnected");
 }
 //-----------------------------------------//
