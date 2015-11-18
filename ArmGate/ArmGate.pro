@@ -29,7 +29,7 @@ UI_DIR = "$$OUTPUT_DIR/ui/"
 DESTDIR = "$$APP_DIR"
 
 ##################################################
-VERSION = 0.04
+VERSION = 0.05
 DEFINES += MODULE_NAME=$$TARGET
 DEFINES += VERSION_NUMBER=v$$VERSION
 
@@ -44,11 +44,13 @@ INCLUDEPATH += "$$SRC_DIR"
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/arms_manager.cpp \
-    src/remote_devices_manager.cpp
+    src/remote_devices_manager.cpp \
+    src/settings.cpp
 
 HEADERS  += src/mainwindow.h \
     src/arms_manager.h \
-    src/remote_devices_manager.h
+    src/remote_devices_manager.h \
+    src/settings.h
 
 FORMS    += src/mainwindow.ui
 

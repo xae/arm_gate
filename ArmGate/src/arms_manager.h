@@ -2,6 +2,7 @@
 #pragma once
 
 #include <QObject>
+#include <QNetworkAccessManager>
 #include <memory>
 
 #include "hardwareserver.h"
@@ -47,6 +48,7 @@ private:
 
 private:
     const std::unique_ptr<ArmHardwareServer::HardwareServer> server_;
+    const std::unique_ptr<QNetworkAccessManager> networkManager_;
 };
 //-----------------------------------------//
 

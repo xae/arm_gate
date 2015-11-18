@@ -2,8 +2,9 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
-    AbstractAsyncClient \
-    HardwareClientLib \
-    HardwareServerLib \
-    ArmHttpServerQt \
+#    AbstractAsyncClient \
+#    HardwareClientLib \
+#    HardwareServerLib \
     ArmGate
+
+#    ArmHttpServerQt

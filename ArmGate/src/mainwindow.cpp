@@ -8,6 +8,7 @@
 #include "ui_mainwindow.h"
 #include "arms_manager.h"
 #include "remote_devices_manager.h"
+#include "settings.h"
 
 #include <cassert>
 //-----------------------------------------//
@@ -49,7 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     assert(armsManager_);
     armsManager_->init();
-    tray_.showMessage(QApplication::applicationName(), tr("Программа запущена: порт 2015"));
+    tray_.showMessage(QApplication::applicationName(),
+                      tr("Программа запущена: порт %1").arg(Settings::value("server/port").toUInt()));
 }
 //-----------------------------------------//
 MainWindow::~MainWindow()

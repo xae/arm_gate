@@ -1,8 +1,7 @@
 //-----------------------------------------//
 #include "arms_manager.h"
 
-#include <QList>
-
+#include "settings.h"
 #include "hardwareserver.h"
 #include "requesthardwarestatusincomingcommand.h"
 #include "startnotifyincomingcommand.h"
@@ -11,14 +10,17 @@
 #include "hardwarestatuschangeoutgoingcommand.h"
 #include "notifystatuschangeoutgoingcommand.h"
 
+#include <QList>
 #include <cassert>
+#include <QNetworkRequest>
 
 using namespace ArmHardwareServer;
 
 //-----------------------------------------//
 ArmsManager::ArmsManager(QObject *parent) :
     QObject(parent),
-    server_(std::unique_ptr<HardwareServer>(new HardwareServer(2015, QHostAddress::Any, this)))
+    server_(new HardwareServer(Settings::value("server/port", 2015).toUInt(), QHostAddress::Any, nullptr)),
+    networkManager_(new QNetworkAccessManager())
 {
 
 }
@@ -59,16 +61,37 @@ void ArmsManager::onRecievedCommand(IIncomingCommandSharedPtr command)
 void ArmsManager::handleStartNotifyCommand(ArmHardwareServer::IIncomingCommandSharedPtr command)
 {
 //    emit logMessage(tr("Принята команда на запуск оповещения"));
-    StartNotifyIncomingCommand* cmd = qobject_cast<StartNotifyIncomingCommand*>(command.data());
-    if (cmd) {
+    if (StartNotifyIncomingCommand* cmd = qobject_cast<StartNotifyIncomingCommand*>(command.data()))
+    {
+        assert(server_);
+        for(const auto& uuid: cmd->hardwaresUuids())
+        {
+            NotifyStatusChangeOutgoingCommand *ocmd = new NotifyStatusChangeOutgoingCommand(uuid,
+                NotifyStatusChangeOutgoingCommand::Process,
+                QDateTime::currentDateTime());
+            server_->sendOutgoingCommand(ocmd);
+        }
+
         QStringList acceptedHardwares;
-        QStringList hardwaresToNotify = cmd->hardwaresUuids();
-        cmd->sendResponse(acceptedHardwares);
+        for(const auto& uuid: cmd->hardwaresUuids())
+        {
+            const auto children = Settings::get().childGroups();
+            if(children.contains(uuid))
+                acceptedHardwares.append(uuid);
+        }
+
+        assert(networkManager_);
+        for(const auto& uuid: acceptedHardwares)
+        {
+            const QString url = tr("http://%1:%2/%3.htm").
+                arg(Settings::value(uuid +"/ip").toString()).
+                arg(Settings::value(uuid +"/port").toString()).
+                arg(cmd->notifyContext().notifyId);
+            networkManager_->get(QNetworkRequest(QUrl(url)));
+        }
+//        cmd->sendResponse(acceptedHardwares);
 //        for (const auto &hi : toProcess) {
-//            NotifyStatusChangeOutgoingCommand *cmd = new NotifyStatusChangeOutgoingCommand(hi.hardwareId,
-//                                                                                           NotifyStatusChangeOutgoingCommand::Process,
-//                                                                                           QDateTime::currentDateTime());
-//            mServer->sendOutgoingCommand(cmd);
+
 //            // планинуем отчет о завершении оповещения через HardwareInfo::notifyDuration секунд
 //            EndNotifyCommandHelper *helper = new EndNotifyCommandHelper(mServer, hi.hardwareId);
 //            QTimer::singleShot(hi.notifyDuration * 1000, helper, SLOT(endNotify()));
